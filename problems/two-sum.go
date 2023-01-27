@@ -4,7 +4,7 @@ import (
 	"errors"
 )
 
-type Interface interface {
+type TwoSumInterface interface {
 	FindIndexForTwoSum() ([]int, error)
 }
 
@@ -14,18 +14,22 @@ type TwoSum struct {
 }
 
 func (tw *TwoSum) FindIndexForTwoSum() ([]int, error) {
-	for i, _ := range tw.Input {
-		currentNumber := tw.Input[i]
-		if i == 0 && currentNumber == tw.TargetSum {
-			return []int{i}, nil
+	numberMap := make(map[int]int, 0)
+	indexOfNumberSum := make([]int, 0, 2)
+	for i, number := range tw.Input {
+		_, exists := numberMap[tw.TargetSum-number]
+		if exists {
+			if len(indexOfNumberSum) == 2 {
+				break
+			}
+			indexOfNumberSum = append(indexOfNumberSum, numberMap[tw.TargetSum-number])
+			indexOfNumberSum = append(indexOfNumberSum, i)
 		}
-		if i > 0 && tw.Input[i]+tw.Input[i-1] == tw.TargetSum {
-			return []int{i - 1, i}, nil
-		}
+		numberMap[number] = i
 	}
 
 	if len(tw.Input) == 0 {
 		return []int{}, errors.New("input value cannot be empty")
 	}
-	return []int{}, nil
+	return indexOfNumberSum, nil
 }
