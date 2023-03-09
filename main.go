@@ -5,6 +5,31 @@ import (
 	"leet-code/problems"
 )
 
+func lengthOfLongestSubstring(s string) int {
+	maxLen := 0
+	for pos, _ := range s {
+		lenSubstr := getStrLong(pos, s)
+		if lenSubstr >= maxLen {
+			maxLen = lenSubstr
+		}
+	}
+
+	return maxLen
+}
+
+func getStrLong(idx int, s string) int {
+	strMap := make(map[byte]bool)
+
+	res := 0
+	for i := idx; i < len(s); i++ {
+		if _, ok := strMap[s[i]]; ok {
+			break
+		}
+		strMap[s[i]] = true
+		res++
+	}
+	return res
+}
 func main() {
 	//	twoSumProblem
 	tsProblem := problems.TwoSum{}
@@ -21,7 +46,16 @@ func main() {
 		Anagram Detection problem
 	*/
 	adProblem := problems.AnagramDetectionProblem{}
+	adProblem.Input = []string{"makan", "nakam", "uka", "kau", "aku", "kasur", "kusut", "tusuk", "raba"}
+	fmt.Printf("Anagrams words : %v \n", adProblem.DetectAnagram())
 
-	adProblem.Input = []string{"makan", "nakam", "kau", "aku", "kasur", "kusut", "tusuk"}
-	adProblem.DetectAnagram()
+	/*
+		Longest Palindromic Substring
+	*/
+
+	lpProblem := problems.LongestPalindromeProblem{}
+	lpProblem.Input = "aba"
+	fmt.Println(lpProblem.FindLongestPalindrome())
+
+	fmt.Println(lengthOfLongestSubstring("abababab"))
 }

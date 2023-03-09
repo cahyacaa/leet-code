@@ -1,7 +1,5 @@
 package problems
 
-import "fmt"
-
 type AnagramDetection interface {
 	DetectAnagram() []string
 }
@@ -18,13 +16,18 @@ func (ad *AnagramDetectionProblem) DetectAnagram() (result []string) {
 			charTotal += charUnicode
 		}
 		if val, _ := wordMap[charTotal]; len(val) >= 1 {
-			result = append(result, val...)
-			result = append(result, s)
+			wordMap[charTotal] = append(wordMap[charTotal], s)
 
+		} else {
+			wordMap[charTotal] = append(wordMap[charTotal], s)
 		}
-		wordMap[charTotal] = append(wordMap[charTotal], s)
 		charTotal = 0
 	}
-	fmt.Println(result)
+
+	for _, val := range wordMap {
+		if len(val) > 1 {
+			result = append(result, val...)
+		}
+	}
 	return
 }
