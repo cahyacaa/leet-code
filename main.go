@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	data_structure "leet-code/data-structure"
 	"leet-code/problems"
 )
 
@@ -58,4 +59,15 @@ func main() {
 	fmt.Println(lpProblem.FindLongestPalindrome())
 
 	fmt.Println(lengthOfLongestSubstring("abababab"))
+
+	/*
+		Binary Tree Data Structure
+	*/
+
+	binaryTree := data_structure.NewBinaryTrees(1)
+	for i := 2; i <= 10; i++ {
+		binaryTree.Add(i)
+	}
+
+	binaryTree.Print()
 }
